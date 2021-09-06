@@ -1,0 +1,26 @@
+Q1 - Creation of Tables 
+CREATE SCHEMA chubb_training;
+use chubb_training;
+CREATE TABLE users (id INTEGER NOT NULL, name varchar(25),college varchar(25),primary key(id));
+CREATE TABLE codekata (id INTEGER , No_of_problems INTEGER ,foreign key(id) references users(id));
+CREATE TABLE attendance (id INTEGER NOT NULL, name varchar(25),date_of_attendance DATE,primary key(id));
+CREATE TABLE topics (topic_id INTEGER NOT NULL,title varchar(25),primary key(topic_id));
+CREATE TABLE tasks (task_id INTEGER NOT NULL,task_name varchar(30),task_date date,primary key(task_id));
+CREATE TABLE company_drives (company_name varchar(25),id INTEGER,foreign key(id) references users(id));
+CREATE TABLE mentors (mentor_id INTEGER NOT NULL, name varchar(25),primary key(mentor_id));
+CREATE TABLE courses (course_id INTEGER NOT NULL, course_name varchar(25),primary key(course_id));
+CREATE TABLE students_activated_courses (id INTEGER,student_name varchar(25),course_id INTEGER,foreign key(id) references users(id),foreign key (course_id) references courses(course_id));
+
+Q2 - Insertion of Tuples 
+INSERT INTO users(id,name,college) values(1,'Karmanya','KIIT'),(2,'Abhimanyu','KIIT'),(3,'Abhishek','KIIT'),(4,'Samiran','LPU'),(5,'Prakarsh','IIT');
+INSERT INTO codekata(id,No_of_problems) values(1,35),(2,10),(3,12),(4,47),(5,40);
+INSERT INTO attendance(id,name,date_of_attendance) values(1,'Karmanya','2021-08-23'),(2,'Abhimanyu','2021-08-23'),(3,'Abhishek','2021-08-23'),(4,'Samiran','2021-08-23'),(5,'Prakarsh','2021-08-23');
+INSERT INTO topics(topic_id,title)values (101,'Strings'),(102,'Array'),(103,'Matrix'),(104,'Linked List'),(105,'Backtracking');
+INSERT INTO tasks(task_id,task_name,task_date)values(1,'MYSQL-CRUD','2021-09-06'),(2,'MONGODB','2021-09-08'),(3,'HTML','2021-09-10'),(4,'CSS','2021-09-12'),(5,'JAVASCRIPT','2021-09-14');
+INSERT INTO company_drives(company_name,id)values('SalesForce',1),('Chubb',3),('Amazon',4),('Swiggy',5),('CRED',2);
+INSERT INTO mentors(mentor_id,name)values(201,'AR Swain'),(202,'Venkatesh'),(203,'Kapil'),(204,'SC Moharana'),(205,'Karuna Verma');
+INSERT INTO courses(course_id,course_name)values(301,'Web Development'),(302,'Blockchain'),(303,'Python'),(304,'API-GraphQL'),(305,'IOS Development');
+INSERT INTO students_activated_courses(id,student_name,course_id)values(1,'Karmanya',302),(2,'Abhimanyu',303),(3,'Abhishek',301),(4,'Samiran',301),(5,'Prakarsh',305);
+
+Q6 - Using Selection Query to find the list of all the mentors from mentors table . 
+Select name from mentors;
