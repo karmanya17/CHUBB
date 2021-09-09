@@ -206,3 +206,5 @@ Queries for product collection -
 
 9.Find products which contain product color indigo  and product price 492.00
 	>db.product.find({$and:[{product_color:"indigo"},{product_price:492}]});
+10. Delete product having smiliar price 
+	> db.product.deleteMany({product_price:36});
