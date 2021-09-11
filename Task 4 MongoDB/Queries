@@ -1,0 +1,88 @@
+1. Find all the topics and tasks which are thought in the month of October
+	> db.topics.aggregate([                                                                                                                                                            
+...   {
+...     '$lookup': {
+...       'from': 'tasks',
+...       'localField': 'topic_id',
+...       'foreignField': 'task_id', 
+...       'as': 'string'
+...     }
+...   }, {
+...     '$match': {
+...       'date': {
+...         '$gte': '2020-10-01',
+...         '$lte': '2020-10-31'
+...       }
+...     }
+...   }
+... ]).pretty();
+
+2.Find all the company drives which appeared between 15 oct-2020 and 31-oct-2020
+	>db.company_drives.find({date:{$gte:"2020-10-15",$lte:"2020-10-31"}});	
+
+3.Find all the company drives and students who are appeared for the placement.
+	>db.company_drives.aggregate([     
+	{         
+	'$unwind': {             
+		'path': '$student'         
+	}     
+	}, 
+	{         
+	'$lookup': {             
+		'from': 'users',              
+		'localField': 'student',
+  		'foreignField': 'user_id',              
+		'as': 'Student_details'         
+		}     
+	} 
+      ]).pretty();
+
+4.Find the number of problems solved by the user in codekata
+	>db.users.find({},{user_id:1,user_name:1,codekata_questions:1,_id:0}).pretty();
+
+5.Find all the mentors with who has the mentee's count more than 15
+	>db.mentors.find({"mentee.15":{"$exists":true}});
+
+6.Find the number of users who are absent and task is not submitted  between 15 oct-2020 and 31-oct-2020
+	>db.users.aggregate([
+    {
+        '$unwind': {
+            'path': '$attendance_present'
+        }
+    }, {
+        '$match': {
+            'attendance_present': {
+                '$not': {
+                    '$gte': '2020-10-15', 
+                    '$lte': '2020-31'
+                }
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$task_assigned'
+        }
+    }, {
+        '$match': {
+            'task_assigned.date': {
+                '$not': {
+                    '$gte': '2020-10-15', 
+                    '$lte': '2020-10-31'
+                }
+            }
+        }
+    }, {
+        '$group': {
+            '_id': {
+                'user_id': '$user_id', 
+                'user_name': '$user_name'
+            }
+        }
+    }
+]
+)
+
+
+
+
+
