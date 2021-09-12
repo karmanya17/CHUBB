@@ -78,6 +78,8 @@
                 'user_name': '$user_name'
             }
         }
+    }, {
+        '$count': 'user_id'
     }
 ]
 )
